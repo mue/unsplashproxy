@@ -26,7 +26,7 @@ fastify.get('/getImage', async () => {
   let data = await fetch(`https://api.unsplash.com/photos/random?client_id=${config.unsplashkey}&query=nature&content_filter=high&featured=true&orientation=landscape`);
   data = await data.json();
   return {
-    file: data.urls.full,
+    file: data.urls.regular,
     photographer: data.user.name,
     location: data.location.city + ' ' + data.location.country
   }

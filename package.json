@@ -1,0 +1,10 @@
+{
+    "dependencies": {
+        "fastify": "2.15.1",
+        "fastify-cors": "3.30",
+        "fastify-no-icon": "3.0.0",
+        "fastify-rate-limit": "4.0.2",
+        "leekslazylogger": "1.1.9",
+        "node-fetch": "2.6.0"
+    }
+}
