@@ -6,6 +6,7 @@ const config = require('./config.json');
 
 //* Set stuff
 log.init(config.logname);
+fastify.register(require('fastify-cors'));
 fastify.register(require('fastify-no-icon'));
 fastify.register(require('fastify-rate-limit'), {
   max: config.ratelimit.max,
