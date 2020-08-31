@@ -1,13 +1,13 @@
-//* Imports
 const fastify = require('fastify')();
-const fetch = require('node-fetch');
-const log = require('leekslazylogger');
+const fetch = require('centra');
+const Logger = require('leekslazylogger');
 const config = require('./config.json');
 
 //* Set stuff
-log.init(config.logname);
+const log = new Logger({
+  name: config.logname
+});
 fastify.register(require('fastify-cors'));
-fastify.register(require('fastify-no-icon'));
 fastify.register(require('fastify-rate-limit'), {
   max: config.ratelimit.max,
   timeWindow: config.ratelimit.timewin
@@ -23,7 +23,7 @@ fastify.get('/', async () => {
 
 fastify.get('/getImage', async () => {
   log.info('Request made to /getImage');
-  let data = await fetch(`https://api.unsplash.com/photos/random?client_id=${config.unsplashkey}&query=nature&content_filter=high&featured=true&orientation=landscape`);
+  let data = await fetch(`https://api.unsplash.com/photos/random?client_id=${config.unsplashkey}&query=nature&content_filter=high&featured=true&orientation=landscape`).send();
   data = await data.json();
   return {
     file: data.urls.full,
@@ -33,4 +33,4 @@ fastify.get('/getImage', async () => {
 });
 
 //* Listen on port
-fastify.listen(config.port, log.info('Fastify server started'));
+fastify.listen(config.port, () => log.info('Fastify server started'));
