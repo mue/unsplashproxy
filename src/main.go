@@ -15,7 +15,7 @@ func setupRouter() *gin.Engine {
 	
 	router.GET("/", func (c *gin.Context) {
 		c.JSON(200, gin.H{"message": "hello world"})
-	}
+	})
 
 	router.GET("/getImage", func(c *gin.Context) {
 		res, err := httpclient.Get("https://api.unsplash.com/photos/random", map[string]string{
