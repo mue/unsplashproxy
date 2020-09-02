@@ -12,9 +12,12 @@ import (
 
 func setupRouter() *gin.Engine {
 	router := gin.New()
+	
+	router.GET("/", func (c *gin.Context) {
+		c.JSON(200, gin.H{"message": "hello world"})
+	}
 
 	router.GET("/getImage", func(c *gin.Context) {
-
 		res, err := httpclient.Get("https://api.unsplash.com/photos/random", map[string]string{
 			"client_id":      os.Getenv("UNSPLASH_KEY"),
 			"query":          "nature",
@@ -26,7 +29,7 @@ func setupRouter() *gin.Engine {
 		var data map[string]map[string]interface{}
 		err = json.Unmarshal([]byte(responseString), &data)
 		if err != nil {
-			c.JSON(500, gin.H{"message": "it broke"})
+			c.JSON(500, gin.H{"message": "Failed to request to the Unsplash API"})
 		}
 		c.JSON(200, gin.H{"file": data["urls"]["full"], "photographer": data["user"]["name"], "location": data["location"]["city"]})
 	})
