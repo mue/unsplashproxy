@@ -1,8 +1,5 @@
 # Directories
-logs/
 .vscode/
-node_modules/
 
 # Files
-config.json
-package-lock.json
+.env
