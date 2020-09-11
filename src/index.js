@@ -29,9 +29,9 @@ fastify.get('/getImage', async (_req, res) => {
     file: data.urls.full,
     photographer: data.user.name,
     location: data.location.city + ' ' + data.location.country,
-    photographer_page: data.links.html + '?utm_source=mue&utm_medium=referral'
+    photographer_page: data.user.links.html + '?utm_source=mue&utm_medium=referral'
   });
-  await fetch(`${data.lnks.download_location}?client_id=${config.unsplashkey}`).send();
+  await fetch(`${data.links.download_location}?client_id=${config.unsplashkey}`).send();
 });
 
 //* Listen on port
