@@ -25,11 +25,13 @@ fastify.get('/getImage', async () => {
   log.info('Request made to /getImage');
   let data = await fetch(`https://api.unsplash.com/photos/random?client_id=${config.unsplashkey}&query=nature&content_filter=high&featured=true&orientation=landscape`).send();
   data = await data.json();
-  return {
+  res.send({
     file: data.urls.full,
     photographer: data.user.name,
-    location: data.location.city + ' ' + data.location.country
-  }
+    location: data.location.city + ' ' + data.location.country,
+    photographer_page: data.links.html + '?utm_source=mue&utm_medium=referral'
+  });
+  await fetch(`${data.lnks.download_location}?client_id=${config.unsplashkey}`).send();
 });
 
 //* Listen on port
