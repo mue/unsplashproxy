@@ -21,7 +21,7 @@ fastify.get('/', async () => {
   };
 });
 
-fastify.get('/getImage', async () => {
+fastify.get('/getImage', async (_req, res) => {
   log.info('Request made to /getImage');
   let data = await fetch(`https://api.unsplash.com/photos/random?client_id=${config.unsplashkey}&query=nature&content_filter=high&featured=true&orientation=landscape`).send();
   data = await data.json();
