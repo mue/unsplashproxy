@@ -1,6 +1,6 @@
 const fastify = require('fastify')();
 const fetch = require('centra');
-const Logger = require('leekslazylogger');
+const Logger = require('leekslazylogger-fastify');
 const config = require('./config.json');
 
 //* Set stuff
@@ -15,18 +15,15 @@ fastify.register(require('fastify-rate-limit'), {
 
 //* Routes
 fastify.get('/', async () => {
-  log.info('Request made to /');
   return {
     message: config.helloworld
   };
 });
 
 fastify.get('/getImage', async (_req, res) => {
-  log.info('Request made to /getImage');
-  let data = await fetch(`https://api.unsplash.com/photos/random?client_id=${config.unsplashkey}&query=nature&content_filter=high&featured=true&orientation=landscape`).send();
-  data = await data.json();
+  const data = await (await fetch(`https://api.unsplash.com/photos/random?client_id=${config.unsplashkey}&query=nature&content_filter=high&featured=true&orientation=landscape`).send()).json();
   res.send({
-    file: data.urls.full,
+    file: data.urls.raw + '?q=85&w=1920',
     photographer: data.user.name,
     location: data.location.city + ' ' + data.location.country,
     photographer_page: data.user.links.html + '?utm_source=mue&utm_medium=referral'
@@ -35,4 +32,4 @@ fastify.get('/getImage', async (_req, res) => {
 });
 
 //* Listen on port
-fastify.listen(config.port, () => log.info('Fastify server started'));
+fastify.listen(config.port, () => log.info(`Server started on port ${config.port}`));
