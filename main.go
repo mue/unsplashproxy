@@ -6,14 +6,16 @@ import (
 
 	"github.com/ddliu/go-httpclient"
 	"github.com/gin-gonic/gin"
+	ratelimit "github.com/zcong1993/gin-ratelimit"
 
 	_ "github.com/joho/godotenv/autoload"
 )
 
 func setupRouter() *gin.Engine {
 	router := gin.New()
-	
-	router.GET("/", func (c *gin.Context) {
+	router.Use(ratelimit.New(ratelimit.Config{Duration: 60, RateLimit: 50}))
+
+	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{"message": "hello world"})
 	})
 
@@ -40,5 +42,5 @@ func setupRouter() *gin.Engine {
 func main() {
 	// Start webserver
 	router := setupRouter()
-	router.Run(os.Getenv("PORT"))
+	router.Run(":" + os.Getenv("PORT"))
 }
