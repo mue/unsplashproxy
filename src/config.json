@@ -1,0 +1,9 @@
+{
+    "port": 1234,
+    "logname": "Unsplash",
+    "ratelimit": {
+        "max": 50,
+        "timewin": "1 minute"
+    },
+    "helloworld": "hello world"
+}
