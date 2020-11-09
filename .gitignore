@@ -4,5 +4,6 @@ logs/
 node_modules/
 
 # Files
+.env
 config.json
 package-lock.json
