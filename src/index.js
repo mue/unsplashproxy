@@ -2,7 +2,6 @@ const fastify = require('fastify')();
 const fetch = require('centra');
 const Logger = require('leekslazylogger-fastify');
 const config = require('./config.json');
-require('dotenv').config();
 
 //* Set stuff
 const log = new Logger({
@@ -33,4 +32,4 @@ fastify.get('/getImage', async (_req, res) => {
 });
 
 //* Listen on port
-fastify.listen(config.port, () => log.info(`Server started on port ${config.port}`));
+fastify.listen(process.env.PORT || config.port, () => log.info(`Server started on port ${process.env.PORT || config.port}`));
